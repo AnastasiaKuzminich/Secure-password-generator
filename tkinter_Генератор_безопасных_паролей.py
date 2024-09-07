@@ -5,8 +5,8 @@ from tkinter.ttk import Combobox
 root = Tk()
 root.title('Генератор безопасных паролей.')
 root.geometry('600x470')
-root.resizable(False, False)
-root.iconbitmap(r"D:\IT\Python\Мини-проекты\2. Генератор безопасных паролей\iconka.ico")
+root.resizable(True, True)
+
 #Colors 
 color_1 = ['#062E65', '#6C99C2', '#D1AC7D', '#C1C5C6']  
 color_2 = ['#536E01', '#E9B101', '#8A9994', '#FCE3AE'] 
@@ -24,15 +24,18 @@ color_13 = ['#896E69', '#F9F9FF', '#D55448', '#FFA577']
 
 colors = [color_1, color_2, color_3, color_4, color_5, color_6, color_7, color_8, color_9, color_10, color_11, color_12, color_13]
 
-#Автоматическое изменение цвета, который по умолчанию
+#Автоматическое изменение цвета, стоящего по умолчанию
 frame_bottom = Frame(root) 
 frame_right = Frame(frame_bottom) 
 var_colors = StringVar()
 combobox_colors = Combobox(frame_right, textvariable = var_colors, justify = CENTER, state = 'readonly', width =50)
 combobox_colors['values'] = ('Дом у воды', 'Коктель на пляже', 'Лесной дождь', 'Звезды в лужах', 'Лавандовое поле', 'Цветы у двери', 'Маки в вазе', 'Малиновый джем', 'Волны на берегу', 'Природная элегантность', 'Солнечный цитрус', 'Пряность', 'Тыквенная дыня')
-var_colors.set('Пряность')
+var_colors.set('Лесной дождь')
 help_colors_number = combobox_colors['values'].index(var_colors.get())
 default_color = colors[help_colors_number]
+sunny = Label()
+sunny['text'] = var_colors.get()
+
 #Начальные наборы цвета
 set_bg4_frames = {'bg' : default_color[3]}
 set_bg3_fgblack_metki = {'background' : default_color[2], 'foreground': 'black'}
@@ -43,14 +46,11 @@ set_dark_buttom ={ 'bg' : default_color[0], 'fg' : 'white', 'activebackground' :
 
 frame_bottom.config(**set_bg4_frames)
 frame_right.config(**set_bg4_frames)
-
-better_number = Label(root, text = '0')
 root.config(**set_bg4_frames)
 def choose_color():
     number = combobox_colors['values'].index(combobox_colors.get())
     name_new_color = combobox_colors['values'][number]
-    better_number['text'] = number
-
+    sunny['text'] = name_new_color
     dark = colors[number][0]
     almost_dark_colors = colors[number][1]
     light_dark_colors = colors[number][2]
@@ -112,7 +112,7 @@ def generate_password(length, spis_chars):
     return password
 
 def play():
-    color_in_use = colors[combobox_colors['values'].index(combobox_colors.get())]#colors[int(better_number['text'])]
+    color_in_use = colors[combobox_colors['values'].index(sunny['text'])]
     dark = color_in_use[0]
     almost_dark_colors = color_in_use[1]
     color_for_frame = color_in_use[3]
@@ -155,15 +155,15 @@ def play():
     def copy1():
         root.clipboard_clear()  # Очистить буфер обмена
         root.clipboard_append(password1)
-        showinfo('', 'Пароль успешно скопирован!')
+        showinfo('', f'Пароль "{password1}" успешно скопирован!')
     def copy2():
         root.clipboard_clear() 
         root.clipboard_append(password2)
-        showinfo('', 'Пароль успешно скопирован!')
+        showinfo('', f'Пароль "{password2}" успешно скопирован!')
     def copy3():
         root.clipboard_clear()  
         root.clipboard_append(password3)
-        showinfo('', 'Пароль успешно скопирован!')
+        showinfo('', f'Пароль "{password3}" успешно скопирован!')
     if count >= 1:
         frame_password_1 = Frame(frame_main_passwords, height = 90, bg = color_for_frame) #Создали ячейку для пароля и кнопки копировать
         label_password_1 = Label(frame_password_1, **set_passw_label, font="Cambria 17 normal roman", pady = 7) #Создали саму метку для пароля
