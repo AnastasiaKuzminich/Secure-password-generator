@@ -1,2 +1,2 @@
 # Secure-password-generator
-ооормсми
+Технопарк декабрь 2024
